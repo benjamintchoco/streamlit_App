@@ -21,7 +21,7 @@ except KeyError:
     st.stop()
 
 # API 기본 URL (TourAPI 4.0 국문관광정보서비스)
-BASE_URL = "http://apis.data.go.kr/B551011/KorService1/searchFestival1"
+BASE_URL = "https://apis.data.go.kr/B551011/KorService2/searchFestival2"
 
 # --- API 데이터 가져오기 함수 (캐싱 적용) ---
 @st.cache_data(ttl=3600)  # 1시간 동안 결과 캐싱
@@ -39,8 +39,12 @@ def fetch_festivals(event_start_date):
     }
     
     try:
-        response = requests.get(BASE_URL, params=params, timeout=10)
-        data = response.json()
+response = requests.get(BASE_URL, params=params, timeout=10)
+
+st.write(response.text)   # 추가
+st.stop()                 # 추가
+
+data = response.json()
         
         items = data.get('response', {}).get('body', {}).get('items', {}).get('item', [])
         if isinstance(items, dict):  # 아이템이 1개일 경우 Dict로 올 수 있음
