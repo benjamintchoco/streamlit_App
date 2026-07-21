@@ -39,17 +39,18 @@ def fetch_festivals(event_start_date):
     }
     
     try:
-response = requests.get(BASE_URL, params=params, timeout=10)
+        response = requests.get(BASE_URL, params=params, timeout=10)
 
-st.write(response.text)   # 추가
-st.stop()                 # 추가
+        st.write(response.text)
+        st.stop()
 
-data = response.json()
-        
+        data = response.json()
+
         items = data.get('response', {}).get('body', {}).get('items', {}).get('item', [])
         if isinstance(items, dict):  # 아이템이 1개일 경우 Dict로 올 수 있음
             items = [items]
         return items
+
     except Exception as e:
         st.error(f"데이터를 불러오는 중 오류가 발생했습니다: {e}")
         return []
